@@ -15,8 +15,8 @@ parse = True
 i = 1
 
 #Parse YouTube url
-#while parse == True:
-while i < 2:
+while parse == True:
+#while i < 2:
     page = requests.get(url)
     # Prepare for parsing YouTube with BeautifulSoup
     soup = BeautifulSoup(page.content, 'lxml')
@@ -27,10 +27,16 @@ while i < 2:
         badposition = soup.find('ul', class_='shelf-content')
         if position.parent.parent.parent != badposition:
             title = position.find('h3', class_='yt-lockup-title ').find('a').string
-            length = position.find('span', class_='accessible-description').string.split('Duration: ')[1].split('.')[0]
+            if(position.find('span', class_='accessible-description') is not None):
+                length = position.find('span', class_='accessible-description').string.split('Duration: ')[1].split('.')[0]
+            else:
+                length = 'Not included'
             videoLink = 'https://www.youtube.com' + position.find('h3', class_='yt-lockup-title ').find('a').get('href')
             uploaded = position.find('ul', class_='yt-lockup-meta-info').find('li').string
-            views = position.find('ul', class_='yt-lockup-meta-info').find('li').next_sibling.string.split(' views')[0]
+            if(position.find('ul', class_='yt-lockup-meta-info').find('li').next_sibling is not None):
+                views = position.find('ul', class_='yt-lockup-meta-info').find('li').next_sibling.string.split(' views')[0]
+            else:
+                views = 'Not included'
             channel = position.find('div', class_='yt-lockup-byline ').find('a').string
             channelLink = 'https://www.youtube.com' + position.find('div', class_='yt-lockup-byline ').find('a').get('href')
 

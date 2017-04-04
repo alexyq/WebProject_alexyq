@@ -1,0 +1,1 @@
+schtasks /Create /SC DAILY /TN "ScheduleTest" /TR "C:\Users\Alex\SCHOOLJUNIOR\CSC3130\WebProject_alexyq\ScheduleTest.bat" /ST 15:00
